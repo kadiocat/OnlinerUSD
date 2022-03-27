@@ -13,7 +13,8 @@ const priceContainerSelectors = [
 	'.offers-list__group .offers-list__item .offers-list__part_price .offers-list__description',
 	'.catalog-offers .catalog-offers__list .catalog-offers__item .catalog-offers__price .catalog-offers__link',
 	'.schema-product .schema-product__part .schema-product__price .schema-product__price-value.js-product-price-link',
-	'.schema-product .schema-product__part .schema-product__price .schema-product__price-value span'
+	'.schema-product .schema-product__part .schema-product__price .schema-product__price-value span',
+	'.product-recommended .product-recommended__list .product-recommended__item .product-recommended__price .product-recommended__link'
 ];
 
 fillWebData();
