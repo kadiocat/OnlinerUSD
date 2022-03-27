@@ -1,0 +1,15 @@
+{
+   "manifest_version": 3,
+   "name": "Onliner USD",
+   "version": "0.01",
+   "description": "Отображения цен onliner.by в USD",
+   "content_scripts": [
+       {
+           "matches": [ "*://*.onliner.by/*" ],
+           "js": [ "app.js" ]
+       }
+   ],
+   "permissions": [
+    "storage"
+  ]
+}
