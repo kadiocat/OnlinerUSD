@@ -26,7 +26,9 @@ async function fillWebData() {
 		return;
 	}
 
-	fillUsdPrice();
+	setTimeout(() => {
+		fillUsdPrice();
+	}, 1000);
 }
 
 function fillUsdPrice() {
