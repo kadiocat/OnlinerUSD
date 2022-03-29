@@ -3,6 +3,11 @@
    "name": "Onliner USD",
    "version": "0.01",
    "description": "Отображения цен onliner.by в USD",
+   "icons": {
+      "128": "128x128.png",
+      "48": "48x48.png",
+      "16": "16x16.png"
+    },
    "content_scripts": [
        {
            "matches": [ "*://*.onliner.by/*" ],
