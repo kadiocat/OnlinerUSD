@@ -4,14 +4,14 @@
    "version": "0.01",
    "description": "Отображения цен onliner.by в USD",
    "icons": {
-      "128": "128x128.png",
-      "48": "48x48.png",
-      "16": "16x16.png"
+      "128": "128.png",
+      "48": "48.png",
+      "16": "16.png"
     },
    "content_scripts": [
        {
            "matches": [ "*://*.onliner.by/*" ],
-           "js": [ "app.js" ]
+           "js": [ "onliner-usd.js" ]
        }
    ],
    "permissions": [
