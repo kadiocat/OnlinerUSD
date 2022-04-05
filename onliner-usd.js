@@ -11,7 +11,9 @@ const staticPriceContainerSelectors = [
 	'.catalog-offers .catalog-offers__list .catalog-offers__item .catalog-offers__price .catalog-offers__link',
 	'.schema-product .schema-product__part .schema-product__price .schema-product__price-value.js-product-price-link',
 	'.schema-product .schema-product__part .schema-product__price .schema-product__price-value span',
-	'.product-recommended .product-recommended__list .product-recommended__item .product-recommended__price .product-recommended__link'
+	'.product-recommended .product-recommended__list .product-recommended__item .product-recommended__price .product-recommended__link',
+	// избранное каталог
+	'.h-list-subjs.h-list-bookmarks table tr td .ppricevalue.ppricevalue_primary'
 ];
 
 start();
@@ -70,9 +72,25 @@ function fillUsdPrice(selectors) {
 				continue;
 			}
 
-			priceContainer.innerText = `${priceContainer.innerText} \n ${getUsdPrice(priceContainer.innerText)} $`;
+			if (priceContainer.innerText.includes(' – ')) {
+				fillMultiPrice(priceContainer);
+			} else {
+				fillSinglePrice(priceContainer);
+			}
 		}
 	});
+}
+
+function fillMultiPrice(priceContainer) {
+	const sprices = priceContainer.innerText.split(' – ');
+	const minPrice = getUsdPrice(sprices[0]);
+	const maxPrice = getUsdPrice(sprices[1]);
+
+	priceContainer.innerText = `${priceContainer.innerText} \n ${minPrice} - ${maxPrice} $`;
+}
+
+function fillSinglePrice(priceContainer) {
+	priceContainer.innerText = `${priceContainer.innerText} \n ${getUsdPrice(priceContainer.innerText)} $`;
 }
 
 function getUsdPrice(priceString) {
