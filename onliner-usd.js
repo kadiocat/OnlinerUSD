@@ -1,5 +1,5 @@
 let usdToBynRate = null;
-let selectors = {
+const selectors = {
   usdToBynRateObserverSelector: {
     selector: ".top-informer-currency span",
     repeats: 0,
@@ -9,11 +9,12 @@ let selectors = {
     repeats: 0,
   },
   catalogObserverSelector: {
-    selector: ".offers-list__group",
+    selector: ".catalog-form__offers-list",
     repeats: 0,
   },
 };
-let maxRepeats = 20;
+const maxRepeats = 20;
+const timeout = 300;
 
 const staticPriceContainerSelectors = [
   // айтем
@@ -37,15 +38,16 @@ function start() {
   const container = document.querySelector(
     selectors["usdToBynRateObserverSelector"].selector
   );
-  if (!container) {
-    setTimeout(() => start(), 300);
-    return;
+  if (container) {
+    usdToBynRate = getPriceInNumber(container.innerText);
+    fillStaticWebData(staticPriceContainerSelectors);
+    rateMutationObserver();
+    mutationObserver(selectors["offersListGroupObserverSelector"]);
+    mutationObserver(selectors["catalogObserverSelector"]);
+  } else if (selectors["usdToBynRateObserverSelector"].repeats <= maxRepeats) {
+    selectors["usdToBynRateObserverSelector"].repeats++;
+    setTimeout(() => start(), timeout);
   }
-  usdToBynRate = getPriceInNumber(container.innerText);
-  fillStaticWebData(staticPriceContainerSelectors);
-  rateMutationObserver();
-  mutationObserver(selectors["offersListGroupObserverSelector"]);
-  mutationObserver(selectors["catalogObserverSelector"]);
 }
 
 function rateMutationObserver() {
@@ -69,14 +71,14 @@ function mutationObserver(selectorObj) {
     fillStaticWebData(staticPriceContainerSelectors);
   } else if (selectorObj.repeats <= maxRepeats) {
     selectorObj.repeats++;
-    setTimeout(() => mutationObserver(selectorObj), 300);
+    setTimeout(() => mutationObserver(selectorObj), timeout);
   }
 }
 
 function getMutationObserver() {
-  return new MutationObserver((mutations) => {
-    mutations.forEach(() => fillStaticWebData(staticPriceContainerSelectors));
-  });
+  return new MutationObserver((mutations) =>
+    mutations.forEach(() => fillStaticWebData(staticPriceContainerSelectors))
+  );
 }
 
 function fillStaticWebData(selectors) {
